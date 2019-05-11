@@ -10,6 +10,13 @@ exports.handler = function(event, context, callback) {
   if (threadmatch) {
     url = threadmatch[0]
     threadId = threadmatch[1]
+  } else {
+    const msgmatch = text.match(/https?:\/\/[^\s]+\/p(\d+)/)
+    if (msgmatch) {
+      url = msgmatch[0]
+      const messageId = msgmatch[1]
+      threadId = `${messageId.slice(0, 10)}.${messageId.slice(10)}`
+    }
   }
   console.log("threadId:", threadId)
   text = text.replace(url, "")
@@ -20,7 +27,7 @@ exports.handler = function(event, context, callback) {
     channel: parsed.channel_id,
     text: `_${text}_`
   })
-  if (threadId) data.thread_ts = threadId
+  if (threadId) data["thread_ts"] = threadId
   console.log("data:", data)
 
   const opts = {
