@@ -23,12 +23,12 @@ exports.handler = function(event, context, callback) {
   const token = process.env.BOT_TOKEN
   console.log("token:", token)
 
-  let data = JSON.stringify({
+  let data = {
     channel: parsed.channel_id,
     text: `_${text}_`
-  })
+  }
   if (threadId) data["thread_ts"] = threadId
-  console.log("data:", data)
+  data = JSON.stringify(data)
 
   const opts = {
     hostname: "slack.com",
