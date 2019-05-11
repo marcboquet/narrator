@@ -11,6 +11,7 @@ exports.handler = function(event, context, callback) {
     url = threadmatch[0]
     threadId = threadmatch[1]
   }
+  console.log("threadId:", threadId)
   text = text.replace(url, "")
   const token = process.env.BOT_TOKEN
   console.log("token:", token)
@@ -20,6 +21,7 @@ exports.handler = function(event, context, callback) {
     text: `_${text}_`
   })
   if (threadId) data.thread_ts = threadId
+  console.log("data:", data)
 
   const opts = {
     hostname: "slack.com",
